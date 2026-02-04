@@ -3,80 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PDF SWIFT - Bilingual Landing Page</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>PDF SWIFT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #5A67D8;
-      --secondary-color: #7F9CF5;
-      --bg-color: #ffffff;
-      --text-color: #1a202c;
-      --card-bg: #f7fafc;
+      --primary: #5A67D8;
+      --secondary: #7F9CF5;
+      --bg: #ffffff;
+      --text: #1a202c;
+      --card: #f7fafc;
     }
     body.dark {
-      --bg-color: #1f2937;
-      --text-color: #f7fafc;
-      --card-bg: #374151;
+      --bg: #1f2937;
+      --text: #f7fafc;
+      --card: #374151;
     }
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color 0.3s, color 0.3s;
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s;
     }
-    header, footer {
-      background-color: var(--primary-color);
+    header {
+      background: var(--primary);
       color: white;
       padding: 1rem 2rem;
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
-    header nav, .header-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    header a, footer a {
+    header nav a {
       color: white;
+      margin: 0 0.7rem;
       text-decoration: none;
-      margin: 0 0.5rem;
+      font-weight: 600;
+    }
+    .btn {
+      background: var(--secondary);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .toggle {
+      background: none;
+      border: 2px solid white;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
     }
     .container {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: auto;
       padding: 2rem;
     }
     .hero {
       text-align: center;
-      padding: 4rem 2rem;
+      padding: 3rem 1rem;
     }
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       margin-bottom: 1rem;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-    .hero .buttons button {
-      margin: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      background-color: var(--secondary-color);
-      color: white;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .section {
-      padding: 3rem 2rem;
-    }
-    .section h2 {
-      text-align: center;
-      margin-bottom: 2rem;
     }
     .grid {
       display: grid;
@@ -84,38 +77,22 @@
       gap: 1.5rem;
     }
     .card {
-      background-color: var(--card-bg);
+      background: var(--card);
       padding: 1.5rem;
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .features ul {
-      list-style: none;
-      padding: 0;
-      max-width: 600px;
-      margin: auto;
+    .section {
+      padding: 3rem 1rem;
     }
-    .features li {
-      margin: 0.5rem 0;
-      padding-left: 1rem;
-      position: relative;
-    }
-    .features li::before {
-      content: "✔";
-      position: absolute;
-      left: 0;
-      color: var(--primary-color);
-    }
-    .plan {
-      background-color: var(--card-bg);
-      padding: 1.5rem;
-      border-radius: 10px;
+    .section h2 {
       text-align: center;
+      margin-bottom: 2rem;
     }
     .testimonial {
-      background-color: var(--card-bg);
+      background: var(--card);
       padding: 1rem;
-      border-radius: 8px;
+      border-radius: 10px;
       text-align: center;
     }
     form {
@@ -126,87 +103,172 @@
       gap: 1rem;
     }
     input, textarea {
-      padding: 0.75rem;
-      border-radius: 5px;
+      padding: 0.8rem;
+      border-radius: 6px;
       border: 1px solid #ccc;
       font-family: inherit;
     }
-    button[type="submit"] {
-      background-color: var(--primary-color);
+    footer {
+      background: var(--primary);
       color: white;
-      border: none;
-      padding: 0.75rem;
-      border-radius: 5px;
-      cursor: pointer;
+      padding: 1rem;
+      text-align: center;
+      margin-top: 2rem;
     }
     .lang-ar {
       display: none;
       direction: rtl;
       text-align: right;
     }
-    .toggle-btn {
-      background: none;
-      border: 2px solid white;
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 5px;
-      cursor: pointer;
-    }
   </style>
 </head>
+
 <body>
-  <header>
-    <div><strong>PDF SWIFT</strong></div>
-    <nav>
-      <div class="dropdown">
-        <a href="#">Tools ▼</a>
+
+<header>
+  <strong>PDF SWIFT</strong>
+  <nav>
+    <a href="#">Tools</a>
+    <a href="#">Pricing</a>
+    <a href="#">About</a>
+    <a href="#">FAQ</a>
+  </nav>
+  <div>
+    <button class="toggle" onclick="toggleLang()">EN / AR</button>
+    <button class="toggle" onclick="toggleMode()">☀ / 🌙</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1 class="lang-en">Fast, Secure, and Professional PDF Tools</h1>
+    <h1 class="lang-ar">أدوات PDF سريعة وآمنة واحترافية</h1>
+
+    <p class="lang-en">PDF SWIFT provides powerful online tools to merge, split, compress, convert, and extract text from PDF files.</p>
+    <p class="lang-ar">يوفر PDF SWIFT أدوات قوية لدمج وتقسيم وضغط وتحويل واستخراج النصوص من ملفات PDF.</p>
+
+    <button class="btn lang-en">Get Started</button>
+    <button class="btn lang-en">Create Account</button>
+
+    <button class="btn lang-ar">ابدأ الآن</button>
+    <button class="btn lang-ar">إنشاء حساب</button>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="section">
+    <h2 class="lang-en">All Your PDF Tools in One Place</h2>
+    <h2 class="lang-ar">جميع أدوات PDF في مكان واحد</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Merge PDF</h3>
+        <p class="lang-en">Combine multiple PDF files into one.</p>
+        <p class="lang-ar">دمج عدة ملفات PDF في ملف واحد.</p>
       </div>
-      <a href="#">Pricing</a>
-      <a href="#">About</a>
-      <a href="#">FAQ</a>
-    </nav>
-    <div class="header-right">
-      <button class="toggle-btn" onclick="toggleLang()">EN / AR</button>
-      <button class="toggle-btn" onclick="toggleMode()">☀ / 🌙</button>
-      <a href="#">Log In</a>
-      <a href="#">Sign Up</a>
-    </div>
-  </header>
 
-  <main class="container">
-    <!-- Sections will be inserted here -->
-    <div class="hero">
-      <h1 class="lang-en">Fast, Secure, and Professional PDF Tools</h1>
-      <h1 class="lang-ar">أدوات PDF سريعة وآمنة واحترافية</h1>
-      <p class="lang-en">PDF SWIFT provides powerful online tools to merge, split, compress, convert, and extract text from PDF files — all in one clean and modern interface.</p>
-      <p class="lang-ar">يوفر PDF SWIFT أدوات قوية عبر الإنترنت لدمج وتقسيم وضغط وتحويل واستخراج النصوص من ملفات PDF في واجهة حديثة وبسيطة.</p>
-      <div class="buttons">
-        <button class="lang-en">Get Started</button>
-        <button class="lang-en">Create Account</button>
-        <button class="lang-ar">ابدأ الآن</button>
-        <button class="lang-ar">إنشاء حساب</button>
+      <div class="card">
+        <h3>Split PDF</h3>
+        <p class="lang-en">Extract pages or split files.</p>
+        <p class="lang-ar">استخراج الصفحات أو تقسيم الملفات.</p>
+      </div>
+
+      <div class="card">
+        <h3>Compress PDF</h3>
+        <p class="lang-en">Reduce file size with high quality.</p>
+        <p class="lang-ar">تقليل حجم الملف مع الحفاظ على الجودة.</p>
+      </div>
+
+      <div class="card">
+        <h3>Convert to PDF</h3>
+        <p class="lang-en">Convert Word, PowerPoint, images, and more.</p>
+        <p class="lang-ar">تحويل Word وPowerPoint والصور والمزيد.</p>
+      </div>
+
+      <div class="card">
+        <h3>Extract Text (OCR)</h3>
+        <p class="lang-en">Extract text from scanned PDFs.</p>
+        <p class="lang-ar">استخراج النصوص من ملفات PDF الممسوحة ضوئيًا.</p>
       </div>
     </div>
-    <!-- Additional sections will be appended in next step -->
-  </main>
+  </section>
 
-  <footer>
-    <div class="lang-en">© 2026 PDF SWIFT — All Rights Reserved.</div>
-    <div class="lang-ar">© 2026 PDF SWIFT — جميع الحقوق محفوظة.</div>
-  </footer>
+  <!-- FEATURES -->
+  <section class="section">
+    <h2 class="lang-en">Why Choose PDF SWIFT?</h2>
+    <h2 class="lang-ar">لماذا تختار PDF SWIFT؟</h2>
 
-  <script>
-    function toggleMode() {
-      document.body.classList.toggle('dark');
-    }
-    function toggleLang() {
-      document.querySelectorAll('.lang-en').forEach(el => el.style.display = el.style.display === 'none' ? '' : 'none');
-      document.querySelectorAll('.lang-ar').forEach(el => el.style.display = el.style.display === 'none' ? '' : 'none');
-    }
-    // Set default language to English
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll('.lang-ar').forEach(el => el.style.display = 'none');
-    });
-  </script>
+    <ul>
+      <li>Fast Processing</li>
+      <li>Secure & Private</li>
+      <li>Easy to Use</li>
+      <li>Multi-Language Support</li>
+      <li>Light & Dark Mode</li>
+    </ul>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <h2 class="lang-en">What Our Users Say</h2>
+    <h2 class="lang-ar">ماذا يقول مستخدمونا؟</h2>
+
+    <div class="grid">
+      <div class="testimonial">
+        <p class="lang-en">"Amazing tool! Saved me hours."</p>
+        <p class="lang-ar">"أداة رائعة! وفرت علي ساعات."</p>
+      </div>
+
+      <div class="testimonial">
+        <p class="lang-en">"Very easy and fast."</p>
+        <p class="lang-ar">"سهل وسريع جدًا."</p>
+      </div>
+
+      <div class="testimonial">
+        <p class="lang-en">"Best PDF tools online."</p>
+        <p class="lang-ar">"أفضل أدوات PDF على الإنترنت."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section">
+    <h2 class="lang-en">Contact Us</h2>
+    <h2 class="lang-ar">تواصل معنا</h2>
+
+    <form>
+      <input class="lang-en" type="text" placeholder="Your Name">
+      <input class="lang-en" type="email" placeholder="Your Email">
+      <textarea class="lang-en" placeholder="Your Message"></textarea>
+
+      <input class="lang-ar" type="text" placeholder="اسمك">
+      <input class="lang-ar" type="email" placeholder="بريدك الإلكتروني">
+      <textarea class="lang-ar" placeholder="رسالتك"></textarea>
+
+      <button class="btn lang-en" type="submit">Send Message</button>
+      <button class="btn lang-ar" type="submit">إرسال</button>
+    </form>
+  </section>
+
+</div>
+
+<footer>
+  <p class="lang-en">© 2026 PDF SWIFT — All Rights Reserved.</p>
+  <p class="lang-ar">© 2026 PDF SWIFT — جميع الحقوق محفوظة.</p>
+</footer>
+
+<script>
+  function toggleMode() {
+    document.body.classList.toggle('dark');
+  }
+  function toggleLang() {
+    document.querySelectorAll('.lang-en').forEach(e => e.style.display = e.style.display === 'none' ? '' : 'none');
+    document.querySelectorAll('.lang-ar').forEach(e => e.style.display = e.style.display === 'none' ? '' : 'none');
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.lang-ar').forEach(e => e.style.display = 'none');
+  });
+</script>
+
 </body>
 </html>
