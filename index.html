@@ -1,5 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<script>
+// منع الوصول للصفحات بدون تسجيل دخول
+if (!localStorage.getItem("email")) {
+    window.location.href = "login.html";
+}
+
+// جعل اللغة العربية هي الافتراضية
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none');
+    document.querySelectorAll('.lang-ar').forEach(e => e.style.display = '');
+});
+</script>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
