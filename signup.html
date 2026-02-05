@@ -13,14 +13,47 @@
       margin: 0;
       font-family: 'Cairo', sans-serif;
       background: linear-gradient(135deg, #5A67D8, #7F9CF5);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      min-height: 100vh;
       direction: rtl;
       text-align: right;
     }
 
+    /* الهيدر */
+    header {
+      background: #5A67D8;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      height: 45px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 600;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .nav-links svg {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 3px;
+    }
+
+    .active-link {
+      font-weight: 800;
+    }
+
+    /* صندوق التسجيل */
     .signup-box {
       background: white;
       width: 90%;
@@ -29,16 +62,12 @@
       border-radius: 14px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.15);
       text-align: center;
+      margin: 3rem auto;
     }
 
-    .logo {
+    .logo-big {
       width: 100px;
       margin-bottom: 1rem;
-    }
-
-    h2 {
-      margin-bottom: 1rem;
-      color: #333;
     }
 
     input {
@@ -72,14 +101,23 @@
       font-weight: 600;
     }
 
-    /* تحسين الجوال */
     @media (max-width: 480px) {
-      .signup-box {
-        padding: 1.5rem;
+      .logo {
+        height: 38px;
       }
 
-      .logo {
-        width: 85px;
+      .nav-links a {
+        margin-left: 1rem;
+        font-size: 0.75rem;
+      }
+
+      .nav-links svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .signup-box {
+        padding: 1.5rem;
       }
     }
   </style>
@@ -87,10 +125,15 @@
 
 <body>
 
+<!-- الهيدر الجديد -->
+<header>
+  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png" class="logo">
+  <nav id="nav-area" class="nav-links"></nav>
+</header>
+
 <div class="signup-box">
 
-  <!-- شعار -->
-  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png" class="logo">
+  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png" class="logo-big">
 
   <h2>إنشاء حساب جديد</h2>
 
@@ -105,6 +148,30 @@
 </div>
 
 <script>
+  const nav = document.getElementById("nav-area");
+  const username = localStorage.getItem("username");
+  const currentPage = "signup.html";
+
+  function linkItem(page, label) {
+    const active = currentPage === page ? "active-link" : "";
+    return `<a href="${page}" class="${active}">${label}</a>`;
+  }
+
+  if (!username) {
+    nav.innerHTML = `
+      ${linkItem("index.html", "الرئيسية")}
+      ${linkItem("tools.html", "الأدوات")}
+      ${linkItem("login.html", "تسجيل الدخول")}
+      ${linkItem("signup.html", "إنشاء حساب")}
+    `;
+  } else {
+    nav.innerHTML = `
+      ${linkItem("dashboard.html", "لوحة التحكم")}
+      ${linkItem("profile.html", "الملف الشخصي")}
+      <a href="#" onclick="logout()">تسجيل الخروج</a>
+    `;
+  }
+
   function signup() {
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -115,13 +182,17 @@
       return;
     }
 
-    // حفظ بيانات المستخدم محليًا (اختياري)
     localStorage.setItem("username", username);
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
 
     alert("تم إنشاء الحساب بنجاح");
     window.location.href = "dashboard.html";
+  }
+
+  function logout() {
+    localStorage.clear();
+    location.href = "index.html";
   }
 </script>
 
