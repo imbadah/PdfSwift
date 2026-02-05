@@ -18,6 +18,7 @@
       text-align: right;
     }
 
+    /* الهيدر */
     header {
       background: #5A67D8;
       padding: 1rem 2rem;
@@ -27,17 +28,37 @@
       align-items: center;
     }
 
-    header img {
+    .logo {
       height: 45px;
     }
 
-    nav a {
+    .nav-links a {
       color: white;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
       font-weight: 600;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.9rem;
     }
 
+    .nav-links svg {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 3px;
+      transition: 0.2s;
+    }
+
+    .active-link {
+      font-weight: 800;
+    }
+
+    .active-link svg {
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.7));
+    }
+
+    /* الصفحة */
     .container {
       max-width: 600px;
       margin: auto;
@@ -47,7 +68,7 @@
     .card {
       background: white;
       padding: 2rem;
-      border-radius: 12px;
+      border-radius: 14px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
     }
@@ -77,18 +98,24 @@
       font-size: 1rem;
     }
 
-    /* تحسين الجوال */
+    /* الجوال */
     @media (max-width: 480px) {
       header {
         padding: 1rem;
       }
 
-      header img {
+      .logo {
         height: 38px;
       }
 
-      .container {
-        padding: 1rem;
+      .nav-links a {
+        margin-left: 1rem;
+        font-size: 0.75rem;
+      }
+
+      .nav-links svg {
+        width: 20px;
+        height: 20px;
       }
 
       .card {
@@ -105,12 +132,10 @@
 
 <body>
 
+<!-- الهيدر الجديد -->
 <header>
-  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png">
-
-  <nav id="nav-area">
-    <!-- يتم التعديل عبر JavaScript -->
-  </nav>
+  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png" class="logo">
+  <nav id="nav-area" class="nav-links"></nav>
 </header>
 
 <div class="container">
@@ -132,29 +157,52 @@
 </div>
 
 <script>
-  // الهيدر حسب حالة المستخدم
   const nav = document.getElementById("nav-area");
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");
+  const currentPage = window.location.pathname.split("/").pop();
 
-  if (username) {
-    nav.innerHTML = `
-      <span style="margin-left:1rem;">${username}</span>
-      <a href="dashboard.html">لوحة التحكم</a>
-      <a href="#" onclick="logout()">تسجيل الخروج</a>
-    `;
-  } else {
-    nav.innerHTML = `
-      <a href="login.html">تسجيل الدخول</a>
-      <a href="signup.html">إنشاء حساب</a>
+  function linkItem(page, label, icon) {
+    const active = currentPage === page ? "active-link" : "";
+    return `
+      <a href="${page}" class="${active}">
+        ${icon}
+        ${label}
+      </a>
     `;
   }
 
-  // تحميل بيانات المستخدم
+  const icons = {
+    dashboard: `<svg fill="url(#grad)" viewBox="0 0 24 24">
+      <defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7F9CF5"/><stop offset="100%" stop-color="#5A67D8"/></linearGradient></defs>
+      <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+    </svg>`,
+
+    profile: `<svg fill="url(#grad)" viewBox="0 0 24 24">
+      <defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7F9CF5"/><stop offset="100%" stop-color="#5A67D8"/></linearGradient></defs>
+      <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/>
+    </svg>`
+  };
+
   if (username) {
+    nav.innerHTML = `
+      ${linkItem("dashboard.html", "لوحة التحكم", icons.dashboard)}
+      ${linkItem("profile.html", "الملف الشخصي", icons.profile)}
+      <a href="#" onclick="logout()">تسجيل الخروج</a>
+    `;
+
     document.getElementById("username").innerText = username;
     document.getElementById("email").innerText = email || "لا يوجد بريد";
     document.getElementById("logout-btn").style.display = "block";
+  } else {
+    nav.innerHTML = `
+      <a href="index.html">الرئيسية</a>
+      <a href="tools.html">الأدوات</a>
+      <a href="login.html">تسجيل الدخول</a>
+      <a href="signup.html">إنشاء حساب</a>
+    `;
   }
 
   // تحميل الصورة
@@ -163,7 +211,6 @@
     document.getElementById("avatar").src = savedAvatar;
   }
 
-  // تغيير الصورة
   function changeAvatar(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -178,7 +225,7 @@
 
   function logout() {
     localStorage.clear();
-    location.reload();
+    location.href = "index.html";
   }
 </script>
 
