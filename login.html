@@ -32,7 +32,7 @@
     }
 
     .logo {
-      width: 90px;
+      width: 100px;
       margin-bottom: 1rem;
     }
 
@@ -77,8 +77,6 @@
       width: 22px;
     }
 
-    .lang-en { display: none; direction: ltr; text-align: left; }
-    .lang-ar { display: block; }
     .toggle {
       margin-top: 1rem;
       background: none;
@@ -87,80 +85,63 @@
       cursor: pointer;
       font-weight: 600;
     }
+
+    /* تحسين الجوال */
+    @media (max-width: 480px) {
+      .login-box {
+        padding: 1.5rem;
+      }
+
+      .logo {
+        width: 85px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
+<!-- Firebase Config -->
+<script type="module" src="firebase-config.js"></script>
+
 <div class="login-box">
 
   <!-- شعار -->
-  <img src="https://ui-avatars.com/api/?name=PDF+SWIFT&background=5A67D8&color=fff&size=128" class="logo">
+  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png" class="logo">
 
-  <h2 class="lang-ar">تسجيل الدخول</h2>
-  <h2 class="lang-en">Login</h2>
+  <h2>تسجيل الدخول</h2>
 
-  <input id="email" type="email" class="lang-ar" placeholder="البريد الإلكتروني">
-  <input id="email-en" type="email" class="lang-en" placeholder="Email">
+  <input id="email" type="email" placeholder="البريد الإلكتروني">
+  <input id="password" type="password" placeholder="كلمة المرور">
 
-  <input id="password" type="password" class="lang-ar" placeholder="كلمة المرور">
-  <input id="password-en" type="password" class="lang-en" placeholder="Password">
-
-  <button class="btn lang-ar" onclick="login()">دخول</button>
-  <button class="btn lang-en" onclick="login()">Login</button>
+  <button class="btn" onclick="normalLogin()">دخول</button>
 
   <!-- تسجيل دخول عبر Google -->
   <button class="btn google-btn" onclick="googleLogin()">
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg">
-    <span class="lang-ar">تسجيل الدخول عبر Google</span>
-    <span class="lang-en">Sign in with Google</span>
+    <span>تسجيل الدخول عبر Google</span>
   </button>
 
-  <button class="toggle" onclick="toggleLang()">AR / EN</button>
-
-  <p style="margin-top:1rem;">
-    <a href="signup.html" style="color:#333; text-decoration:none;" class="lang-ar">إنشاء حساب جديد</a>
-    <a href="signup.html" style="color:#333; text-decoration:none;" class="lang-en">Create Account</a>
-  </p>
+  <button class="toggle" onclick="window.location.href='signup.html'">إنشاء حساب جديد</button>
 
 </div>
 
 <script>
-function toggleLang() {
-  const ar = document.querySelectorAll('.lang-ar');
-  const en = document.querySelectorAll('.lang-en');
+  // تسجيل دخول عادي (اختياري)
+  function normalLogin() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-  const isArabic = ar[0].style.display !== 'none';
+    if (!email || !password) {
+      alert("الرجاء إدخال البريد وكلمة المرور");
+      return;
+    }
 
-  if (isArabic) {
-    ar.forEach(e => e.style.display = 'none');
-    en.forEach(e => e.style.display = 'block');
-  } else {
-    en.forEach(e => e.style.display = 'none');
-    ar.forEach(e => e.style.display = 'block');
+    localStorage.setItem("email", email);
+    localStorage.setItem("username", email.split("@")[0]);
+
+    window.location.href = "dashboard.html";
   }
-}
-
-// تسجيل دخول عادي
-function login() {
-  const email = document.getElementById("email").value || document.getElementById("email-en").value;
-  const password = document.getElementById("password").value || document.getElementById("password-en").value;
-
-  if (!email || !password) {
-    alert("الرجاء إدخال البريد وكلمة المرور");
-    return;
-  }
-
-  localStorage.setItem("email", email);
-  localStorage.setItem("username", email.split("@")[0]);
-
-  location.href = "dashboard.html";
-}
-
-// تسجيل دخول عبر Google (واجهة فقط)
-function googleLogin() {
-  alert("ميزة تسجيل الدخول عبر Google تحتاج Backend، لكن الواجهة جاهزة.");
-}
 </script>
 
 </body>
