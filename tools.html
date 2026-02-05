@@ -3,391 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Swift | الأدوات</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #C084FC, #818CF8, #60A5FA);
-            background-size: 200% 200%;
-            animation: gradientMove 12s ease infinite;
-            color: #fff;
-        }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .header {
-            width: 100%;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(12px);
-            background: rgba(255, 255, 255, 0.08);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 700;
-        }
-
-        .nav a {
-            margin-left: 20px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        .nav a:hover,
-        .nav .active {
-            color: #FFD6FF;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-            padding: 40px;
-        }
-
-        .tool-card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(14px);
-            border-radius: 18px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .tool-card.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .tool-card:hover:not(.disabled) {
-            transform: translateY(-6px);
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .tool-card i {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(6px);
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .modal-content {
-            width: 420px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(18px);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .close {
-            float: left;
-            font-size: 26px;
-            cursor: pointer;
-            color: #fff;
-        }
-
-        .file-label {
-            display: block;
-            background: rgba(255, 255, 255, 0.18);
-            padding: 14px;
-            border-radius: 14px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            transition: 0.3s;
-        }
-
-        .file-label input {
-            display: none;
-        }
-
-        .action-btn {
-            width: 100%;
-            margin-top: 20px;
-            padding: 14px;
-            background: linear-gradient(135deg, #C084FC, #818CF8);
-            border: none;
-            border-radius: 14px;
-            color: #fff;
-            font-size: 18px;
-            cursor: pointer;
-        }
-    </style>
+    <title>PDF SWIFT | الأدوات</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="header">
-        <div class="logo">PDF Swift</div>
-        <div class="nav">
-            <a href="index.html">الرئيسية</a>
-            <a href="tools.html" class="active">الأدوات</a>
+    <!-- HEADER -->
+    <header>
+        <div class="navbar container">
+            <div class="logo">PDF SWIFT</div>
+            <div class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="tools.html">الأدوات</a>
+            </div>
         </div>
-    </div>
+    </header>
 
-    <div class="hero">
-        <h1>الأدوات</h1>
-        <p>اختر الأداة التي تريد استخدامها</p>
-    </div>
+    <!-- PAGE TITLE -->
+    <section class="container" style="margin-top:40px;">
+        <h1 style="color:#6a0dad; margin-bottom:10px;">أدوات PDF</h1>
+        <p style="color:#555;">اختر الأداة التي تريد استخدامها</p>
+    </section>
 
-    <div class="tools-grid">
+    <!-- TOOLS GRID -->
+    <section class="container">
+        <div class="tools-grid">
 
-        <!-- أدوات تعمل -->
-        <div class="tool-card" onclick="openTool('jpg_to_pdf')">
-            <i class="fa-solid fa-file-image"></i>
-            <h3>JPG → PDF</h3>
+            <!-- دمج PDF -->
+            <div class="tool-card" onclick="openModal('mergeModal')">
+                <i>📎</i>
+                <h3>دمج ملفات PDF</h3>
+                <p>دمج عدة ملفات PDF في ملف واحد بسهولة.</p>
+            </div>
+
+            <!-- تقسيم PDF -->
+            <div class="tool-card" onclick="openModal('splitModal')">
+                <i>✂️</i>
+                <h3>تقسيم PDF</h3>
+                <p>تقسيم ملف PDF إلى عدة ملفات.</p>
+            </div>
+
+            <!-- تدوير PDF -->
+            <div class="tool-card" onclick="openModal('rotateModal')">
+                <i>🔄</i>
+                <h3>تدوير الصفحات</h3>
+                <p>تدوير صفحات PDF بزاوية 90° أو 180°.</p>
+            </div>
+
+            <!-- حماية PDF -->
+            <div class="tool-card" onclick="openModal('protectModal')">
+                <i>🔐</i>
+                <h3>حماية PDF</h3>
+                <p>إضافة كلمة مرور لملف PDF.</p>
+            </div>
+
+            <!-- إزالة حماية PDF -->
+            <div class="tool-card" onclick="openModal('unlockModal')">
+                <i>🔓</i>
+                <h3>إزالة كلمة المرور</h3>
+                <p>فتح ملف PDF محمي بكلمة مرور.</p>
+            </div>
+
+            <!-- ضغط PDF -->
+            <div class="tool-card" onclick="openModal('compressModal')">
+                <i>📉</i>
+                <h3>ضغط PDF</h3>
+                <p>تقليل حجم ملف PDF بسهولة.</p>
+            </div>
+
+            <!-- JPG إلى PDF -->
+            <div class="tool-card" onclick="openModal('jpgModal')">
+                <i>🖼️</i>
+                <h3>JPG إلى PDF</h3>
+                <p>تحويل صورة JPG إلى ملف PDF.</p>
+            </div>
+
+            <!-- PDF إلى JPG -->
+            <div class="tool-card" onclick="openModal('pdfToImgModal')">
+                <i>🧾</i>
+                <h3>PDF إلى JPG</h3>
+                <p>تحويل صفحات PDF إلى صور JPG.</p>
+            </div>
+
         </div>
+    </section>
 
-        <div class="tool-card" onclick="openTool('resize')">
-            <i class="fa-solid fa-expand"></i>
-            <h3>تغيير حجم الصور</h3>
-        </div>
-
-        <div class="tool-card" onclick="openTool('png_to_jpg')">
-            <i class="fa-solid fa-image"></i>
-            <h3>PNG → JPG</h3>
-        </div>
-
-        <div class="tool-card" onclick="openTool('text_to_file')">
-            <i class="fa-solid fa-file-lines"></i>
-            <h3>نص → ملف TXT</h3>
-        </div>
-
-        <!-- أدوات غير مفعّلة -->
-        <div class="tool-card disabled">
-            <i class="fa-solid fa-layer-group"></i>
-            <h3>دمج PDF (قريباً)</h3>
-        </div>
-
-        <div class="tool-card disabled">
-            <i class="fa-solid fa-scissors"></i>
-            <h3>تقسيم PDF (قريباً)</h3>
-        </div>
-
-        <div class="tool-card disabled">
-            <i class="fa-solid fa-lock"></i>
-            <h3>حماية PDF (قريباً)</h3>
-        </div>
-
-        <div class="tool-card disabled">
-            <i class="fa-solid fa-unlock"></i>
-            <h3>إزالة حماية (قريباً)</h3>
-        </div>
-
-        <div class="tool-card disabled">
-            <i class="fa-solid fa-rotate"></i>
-            <h3>تدوير PDF (قريباً)</h3>
-        </div>
-
-    </div>
-
-    <!-- المودال -->
-    <div id="toolModal" class="modal">
+    <!-- MODALS -->
+    <!-- نموذج واحد — والباقي نفس الفكرة -->
+    <div id="mergeModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-
-            <h2 id="modalTitle"></h2>
-            <p id="modalDesc"></p>
-
-            <label class="file-label">
-                اختر ملف
-                <input type="file" id="fileInput" multiple>
-            </label>
-
-            <div id="dynamicInputs"></div>
-
-            <button class="action-btn" onclick="startTool()">تنفيذ</button>
+            <span class="close-btn" onclick="closeModal('mergeModal')">&times;</span>
+            <h2>دمج ملفات PDF</h2>
+            <p>هذه الأداة ستسمح لك بدمج عدة ملفات PDF في ملف واحد.</p>
+            <input type="file" id="mergeFiles" multiple accept="application/pdf">
+            <br><br>
+            <button class="btn" onclick="alert('سيتم إضافة المعالجة لاحقًا')">دمج الآن</button>
         </div>
     </div>
 
-<script>
+    <!-- نسخ المودالات الأخرى بنفس الشكل -->
+    <div id="splitModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('splitModal')">&times;</span><h2>تقسيم PDF</h2><p>اختر ملف PDF لتقسيمه.</p><input type="file" accept="application/pdf"><br><br><button class="btn" onclick="alert('سيتم إضافة المعالجة لاحقًا')">تقسيم</button></div></div>
 
-function openTool(tool) {
-    const modal = document.getElementById("toolModal");
-    const title = document.getElementById("modalTitle");
-    const desc = document.getElementById("modalDesc");
-    const dynamicInputs = document.getElementById("dynamicInputs");
+    <div id="rotateModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('rotateModal')">&times;</span><h2>تدوير الصفحات</h2><p>اختر ملف PDF لتدوير صفحاته.</p><input type="file" accept="application/pdf"><br><br><button class="btn" onclick="alert('سيتم إضافة المعالجة لاحقًا')">تدوير</button></div></div>
 
-    modal.style.display = "flex";
-    dynamicInputs.innerHTML = "";
-    document.getElementById("fileInput").value = "";
+    <div id="protectModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('protectModal')">&times;</span><h2>حماية PDF</h2><p>اختر ملف PDF وأدخل كلمة مرور.</p><input type="file" accept="application/pdf"><br><br><input type="password" placeholder="كلمة المرور"><br><br><button class="btn" onclick="alert('سيتم إضافة المعالجة لاحقًا')">حماية</button></div></div>
 
-    switch (tool) {
-        case "jpg_to_pdf":
-            title.textContent = "تحويل JPG إلى PDF";
-            desc.textContent = "اختر صور JPG وسيتم دمجها في ملف PDF.";
-            break;
+    <div id="unlockModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('unlockModal')">&times;</span><h2>إزالة كلمة المرور</h2><p>اختر ملف PDF وأدخل كلمة المرور الحالية.</p><input type="file" accept="application/pdf"><br><br><input type="password" placeholder="كلمة المرور الحالية"><br><br><button class="btn" onclick="alert('سيتم إضافة المعالجة لاحقًا')">إزالة الحماية</button></div></div>
 
-        case "resize":
-            title.textContent = "تغيير حجم الصور";
-            desc.textContent = "اختر صورة وحدد الحجم الجديد.";
-            dynamicInputs.innerHTML = `
-                <label>العرض (px):</label>
-                <input type="number" id="widthInput" class="input-field">
+    <div id="compressModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('compressModal')">&times;</span><h2>ضغط PDF</h2><p>اختر ملف PDF لتقليل حجمه.</p><input type="file" accept="application/pdf"><br><br><button class="btn" onclick="alert('سيتم إضافة المعالجة لاحقًا')">ضغط</button></div></div>
 
-                <label>الارتفاع (px):</label>
-                <input type="number" id="heightInput" class="input-field">
-            `;
-            break;
+    <div id="jpgModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('jpgModal')">&times;</span><h2>JPG إلى PDF</h2><p>اختر صورة JPG لتحويلها إلى PDF.</p><input type="file" accept="image/jpeg"><br><br><button class="btn" onclick="alert('سيتم إضافة المعالجة لاحقًا')">تحويل</button></div></div>
 
-        case "png_to_jpg":
-            title.textContent = "تحويل PNG إلى JPG";
-            desc.textContent = "اختر صورة PNG وسيتم تحويلها.";
-            break;
+    <div id="pdfToImgModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('pdfToImgModal')">&times;</span><h2>PDF إلى JPG</h2><p>اختر ملف PDF لتحويل صفحاته إلى صور.</p><input type="file" accept="application/pdf"><br><br><button class="btn" onclick="alert('سيتم إضافة المعالجة لاحقًا')">تحويل</button></div></div>
 
-        case "text_to_file":
-            title.textContent = "تحويل نص إلى ملف TXT";
-            desc.textContent = "اكتب النص وسيتم حفظه كملف.";
-            dynamicInputs.innerHTML = `
-                <textarea id="textInput" class="input-field" style="width:100%;height:120px;"></textarea>
-            `;
-            break;
-    }
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 PDF SWIFT — جميع الحقوق محفوظة</p>
+        <p>
+            تواصل معنا:
+            <a href="https://x.com/BADAH_AI" target="_blank">BADAH_AI@</a> |
+            <a href="mailto:imbadah@hotmail.com">imbadah@hotmail.com</a>
+        </p>
+    </footer>
 
-    window.currentTool = tool;
-}
-
-function closeModal() {
-    document.getElementById("toolModal").style.display = "none";
-}
-
-async function startTool() {
-    const files = document.getElementById("fileInput").files;
-
-    switch (window.currentTool) {
-
-        case "jpg_to_pdf":
-            await jpgToPdf(files);
-            break;
-
-        case "resize":
-            await resizeImage(files[0]);
-            break;
-
-        case "png_to_jpg":
-            await pngToJpg(files[0]);
-            break;
-
-        case "text_to_file":
-            saveText();
-            break;
-    }
-}
-
-async function jpgToPdf(files) {
-    const pdf = new jspdf.jsPDF();
-
-    for (let i = 0; i < files.length; i++) {
-        const img = await readImage(files[i]);
-        pdf.addImage(img, "JPEG", 10, 10, 190, 260);
-        if (i < files.length - 1) pdf.addPage();
-    }
-
-    pdf.save("images.pdf");
-}
-
-async function resizeImage(file) {
-    const width = parseInt(document.getElementById("widthInput").value);
-    const height = parseInt(document.getElementById("heightInput").value);
-
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-
-    img.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
-
-        canvas.toBlob(blob => {
-            downloadFile(blob, "resized.jpg");
-        }, "image/jpeg");
-    };
-}
-
-async function pngToJpg(file) {
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-
-    img.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#fff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0);
-
-        canvas.toBlob(blob => {
-            downloadFile(blob, "converted.jpg");
-        }, "image/jpeg");
-    };
-}
-
-function saveText() {
-    const text = document.getElementById("textInput").value;
-    const blob = new Blob([text], { type: "text/plain" });
-    downloadFile(blob, "text.txt");
-}
-
-function readImage(file) {
-    return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.readAsDataURL(file);
-    });
-}
-
-function downloadFile(data, filename) {
-    const blob = data instanceof Blob ? data : new Blob([data]);
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.click();
-}
-
-</script>
+    <!-- JS -->
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+        }
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+        window.onclick = function(e) {
+            document.querySelectorAll('.modal').forEach(m => {
+                if (e.target === m) m.style.display = "none";
+            });
+        }
+    </script>
 
 </body>
 </html>
