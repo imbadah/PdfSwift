@@ -15,7 +15,15 @@
             <div class="logo">PDF SWIFT</div>
             <div class="nav-links">
                 <a href="index.html">الرئيسية</a>
-                <a href="tools.html">الأدوات</a>
+
+                <div class="dropdown">
+                    <button class="dropdown-toggle" type="button">المزيد ▾</button>
+                    <div class="dropdown-menu">
+                        <a href="tools.html">الأدوات</a>
+                        <a href="about.html">من نحن</a>
+                        <a href="privacy.html">سياسة الخصوصية</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -23,7 +31,7 @@
     <!-- HERO -->
     <section class="hero container">
         <h1>PDF SWIFT</h1>
-        <p>منصة سريعة وسهلة لتحرير ملفات PDF — دمج، تقسيم، تدوير، حماية والمزيد.</p>
+        <p>منصة سريعة وسهلة لتحرير ملفات PDF — دمج، تقسيم، تدوير، حماية والمزيد، مباشرة من المتصفح.</p>
         <a href="tools.html" class="btn">الانتقال إلى الأدوات</a>
     </section>
 
@@ -56,6 +64,37 @@
 
         </div>
     </footer>
+
+    <script>
+        // كشف الأجهزة التي ليست لمس (لـ Hover)
+        (function() {
+            if (!('ontouchstart' in window)) {
+                document.body.classList.add('no-touch');
+            }
+
+            const dropdown = document.querySelector('.dropdown');
+            const toggle = document.querySelector('.dropdown-toggle');
+
+            if (!dropdown || !toggle) return;
+
+            // للجوال: فتح/إغلاق عند الضغط
+            toggle.addEventListener('click', function(e) {
+                if (document.body.classList.contains('no-touch')) {
+                    // على الكمبيوتر نخلي الهوفر هو الأساس
+                    return;
+                }
+                e.stopPropagation();
+                dropdown.classList.toggle('open');
+            });
+
+            // إغلاق عند الضغط خارج القائمة على الجوال
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('open');
+                }
+            });
+        })();
+    </script>
 
 </body>
 </html>
