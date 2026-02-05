@@ -25,12 +25,11 @@ body {
 }
 
 /* ------------------------------
-   HEADER
+   HEADER (كحلي + شعار أبيض)
 ------------------------------ */
 header {
     width: 100%;
-    background: #ffffff;
-    border-bottom: 1px solid #eee;
+    background: #001f3f; /* كحلي */
     position: sticky;
     top: 0;
     z-index: 999;
@@ -46,24 +45,24 @@ header {
 .logo {
     font-size: 26px;
     font-weight: 800;
-    color: #6a0dad;
+    color: #ffffff; /* أبيض */
     letter-spacing: 1px;
 }
 
 .nav-links a {
     margin-left: 25px;
     text-decoration: none;
-    color: #444;
+    color: #ffffff; /* أبيض */
     font-size: 17px;
     transition: 0.2s;
 }
 
 .nav-links a:hover {
-    color: #6a0dad;
+    color: #d4c4ff; /* بنفسجي فاتح */
 }
 
 /* ------------------------------
-   HERO SECTION (INDEX)
+   HERO SECTION
 ------------------------------ */
 .hero {
     text-align: center;
@@ -173,27 +172,27 @@ header {
 }
 
 /* ------------------------------
-   FOOTER
+   FOOTER (كحلي + أيقونات)
 ------------------------------ */
 footer {
     margin-top: 60px;
     padding: 35px 20px;
-    background: #ffffff;
-    border-top: 1px solid #eee;
+    background: #001f3f; /* كحلي */
     text-align: center;
+    color: white;
 }
 
 footer p {
     font-size: 16px;
-    color: #555;
+    color: #ffffff;
 }
 
 footer a {
-    color: #6a0dad;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 600;
 }
 
 footer a:hover {
-    text-decoration: underline;
+    opacity: 0.7;
 }
