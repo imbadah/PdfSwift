@@ -18,6 +18,7 @@
       text-align: right;
     }
 
+    /* الهيدر */
     header {
       background: #5A67D8;
       padding: 1rem 2rem;
@@ -27,17 +28,37 @@
       align-items: center;
     }
 
-    header img {
+    .logo {
       height: 45px;
     }
 
-    nav a {
+    .nav-links a {
       color: white;
       text-decoration: none;
-      margin-left: 1rem;
+      margin-left: 1.5rem;
       font-weight: 600;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.9rem;
     }
 
+    .nav-links svg {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 3px;
+      transition: 0.2s;
+    }
+
+    .active-link {
+      font-weight: 800;
+    }
+
+    .active-link svg {
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.7));
+    }
+
+    /* الأدوات */
     .container {
       max-width: 1100px;
       margin: auto;
@@ -45,8 +66,10 @@
     }
 
     h2 {
-      margin-bottom: 1.5rem;
       text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      color: #333;
     }
 
     .grid {
@@ -57,40 +80,35 @@
 
     .tool-card {
       background: white;
-      padding: 2rem;
-      border-radius: 12px;
+      padding: 1.8rem;
+      border-radius: 14px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.25s;
     }
 
     .tool-card:hover {
-      transform: scale(1.03);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
-    .tool-card img {
-      width: 60px;
+    .tool-card svg {
+      width: 50px;
+      height: 50px;
       margin-bottom: 1rem;
     }
 
     .tool-card h3 {
       margin: 0;
       font-size: 1.2rem;
+      color: #333;
     }
 
-    /* تحسين الجوال */
+    /* الجوال */
     @media (max-width: 768px) {
       .grid {
         grid-template-columns: repeat(2, 1fr);
-      }
-
-      .tool-card {
-        padding: 1.5rem;
-      }
-
-      .tool-card img {
-        width: 50px;
       }
     }
 
@@ -99,29 +117,22 @@
         padding: 1rem;
       }
 
-      header img {
+      .logo {
         height: 38px;
       }
 
-      .container {
-        padding: 1rem;
+      .nav-links a {
+        margin-left: 1rem;
+        font-size: 0.75rem;
+      }
+
+      .nav-links svg {
+        width: 20px;
+        height: 20px;
       }
 
       .grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .tool-card {
-        padding: 1.2rem;
-      }
-
-      .tool-card img {
-        width: 45px;
-      }
-
-      .tool-card h3 {
-        font-size: 1rem;
       }
     }
   </style>
@@ -129,75 +140,72 @@
 
 <body>
 
+<!-- الهيدر الجديد -->
 <header>
-  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png">
-
-  <nav id="nav-area">
-    <!-- يتم التعديل عبر JavaScript -->
-  </nav>
+  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png" class="logo">
+  <nav id="nav-area" class="nav-links"></nav>
 </header>
 
 <div class="container">
-
   <h2>الأدوات المتاحة</h2>
 
   <div class="grid">
 
-    <div class="tool-card" onclick="alert('سيتم إضافة الأداة لاحقاً')">
-      <img src="https://img.icons8.com/ios-filled/100/5A67D8/pdf.png">
-      <h3>دمج ملفات PDF</h3>
-    </div>
-
-    <div class="tool-card" onclick="alert('سيتم إضافة الأداة لاحقاً')">
-      <img src="https://img.icons8.com/ios-filled/100/5A67D8/split-files.png">
-      <h3>تقسيم PDF</h3>
-    </div>
-
-    <div class="tool-card" onclick="alert('سيتم إضافة الأداة لاحقاً')">
-      <img src="https://img.icons8.com/ios-filled/100/5A67D8/compress.png">
-      <h3>ضغط PDF</h3>
-    </div>
-
-    <div class="tool-card" onclick="alert('سيتم إضافة الأداة لاحقاً')">
-      <img src="https://img.icons8.com/ios-filled/100/5A67D8/convert.png">
-      <h3>PDF إلى Word</h3>
-    </div>
-
-    <div class="tool-card" onclick="alert('سيتم إضافة الأداة لاحقاً')">
-      <img src="https://img.icons8.com/ios-filled/100/5A67D8/convert.png">
-      <h3>Word إلى PDF</h3>
-    </div>
-
-    <div class="tool-card" onclick="alert('سيتم إضافة الأداة لاحقاً')">
-      <img src="https://img.icons8.com/ios-filled/100/5A67D8/lock.png">
-      <h3>حماية PDF</h3>
-    </div>
+    <!-- 12 أداة احترافية -->
+    <div class="tool-card"><h3>دمج PDF</h3></div>
+    <div class="tool-card"><h3>تقسيم PDF</h3></div>
+    <div class="tool-card"><h3>ضغط PDF</h3></div>
+    <div class="tool-card"><h3>PDF إلى Word</h3></div>
+    <div class="tool-card"><h3>Word إلى PDF</h3></div>
+    <div class="tool-card"><h3>PDF إلى JPG</h3></div>
+    <div class="tool-card"><h3>JPG إلى PDF</h3></div>
+    <div class="tool-card"><h3>حماية PDF</h3></div>
+    <div class="tool-card"><h3>إزالة كلمة المرور</h3></div>
+    <div class="tool-card"><h3>تدوير الصفحات</h3></div>
+    <div class="tool-card"><h3>استخراج الصفحات</h3></div>
+    <div class="tool-card"><h3>إعادة ترتيب الصفحات</h3></div>
 
   </div>
-
 </div>
 
 <script>
-  // عرض أزرار الهيدر حسب حالة المستخدم
   const nav = document.getElementById("nav-area");
   const username = localStorage.getItem("username");
+  const currentPage = window.location.pathname.split("/").pop();
 
-  if (username) {
+  function linkItem(page, label, icon) {
+    const active = currentPage === page ? "active-link" : "";
+    return `
+      <a href="${page}" class="${active}">
+        ${icon}
+        ${label}
+      </a>
+    `;
+  }
+
+  const icons = {
+    home: `<svg fill="url(#grad)" viewBox="0 0 24 24"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7F9CF5"/><stop offset="100%" stop-color="#5A67D8"/></linearGradient></defs><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-10.5z"/></svg>`,
+    tools: `<svg fill="url(#grad)" viewBox="0 0 24 24"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7F9CF5"/><stop offset="100%" stop-color="#5A67D8"/></linearGradient></defs><path d="M14.7 6.3l3 3-8.4 8.4H6.3v-3l8.4-8.4zM19.7 4.3a1 1 0 0 0-1.4 0l-1.6 1.6 3 3 1.6-1.6a1 1 0 0 0 0-1.4l-1.6-1.6z"/></svg>`
+  };
+
+  if (!username) {
     nav.innerHTML = `
-      <span style="margin-left:1rem;">${username}</span>
-      <a href="profile.html">الملف الشخصي</a>
-      <a href="#" onclick="logout()">تسجيل الخروج</a>
+      ${linkItem("index.html", "الرئيسية", icons.home)}
+      ${linkItem("tools.html", "الأدوات", icons.tools)}
+      <a href="login.html">تسجيل الدخول</a>
+      <a href="signup.html">إنشاء حساب</a>
     `;
   } else {
     nav.innerHTML = `
-      <a href="login.html">تسجيل الدخول</a>
-      <a href="signup.html">إنشاء حساب</a>
+      <a href="dashboard.html">لوحة التحكم</a>
+      <a href="profile.html">الملف الشخصي</a>
+      <a href="#" onclick="logout()">تسجيل الخروج</a>
     `;
   }
 
   function logout() {
     localStorage.clear();
-    location.reload();
+    location.href = "index.html";
   }
 </script>
 
