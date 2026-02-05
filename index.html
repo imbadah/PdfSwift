@@ -1,247 +1,137 @@
 <!DOCTYPE html>
 <html lang="ar">
 
-<!-- 🔐 حماية الصفحة + العربية افتراضية -->
-<script>
-
-    // جعل اللغة العربية هي الافتراضية
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll('.lang-en').forEach(e => e.style.display = 'none');
-    document.querySelectorAll('.lang-ar').forEach(e => e.style.display = '');
-});
-</script>
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PDF SWIFT</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF SWIFT | الرئيسية</title>
 
-  <!-- خطوط عربية + إنجليزية -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --primary: #5A67D8;
-      --secondary: #7F9CF5;
-      --bg: #ffffff;
-      --text: #1a202c;
-      --card: #f7fafc;
-    }
-    body.dark {
-      --bg: #1f2937;
-      --text: #f7fafc;
-      --card: #374151;
-    }
     body {
       margin: 0;
-      font-family: 'Cairo', 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: 0.3s;
+      font-family: 'Cairo', sans-serif;
+      background: #f3f4f6;
+      color: #1a202c;
       direction: rtl;
       text-align: right;
     }
+
     header {
-      background: var(--primary);
-      color: white;
+      background: #5A67D8;
       padding: 1rem 2rem;
+      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
     }
-    header nav a {
+
+    header img {
+      height: 45px;
+    }
+
+    nav a {
       color: white;
-      margin: 0 0.7rem;
       text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn {
-      background: var(--secondary);
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
+      margin-left: 1rem;
       font-weight: 600;
     }
-    .toggle {
-      background: none;
-      border: 2px solid white;
-      color: white;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+
     .container {
       max-width: 1100px;
       margin: auto;
       padding: 2rem;
-    }
-    .hero {
       text-align: center;
-      padding: 3rem 1rem;
     }
-    .hero h1 {
-      font-size: 2.4rem;
+
+    h1 {
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+
+    p {
+      font-size: 1.2rem;
+      color: #555;
     }
-    .card {
-      background: var(--card);
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      cursor: pointer;
-    }
-    .section {
-      padding: 3rem 1rem;
-    }
-    .section h2 {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    footer {
-      background: var(--primary);
+
+    .btn {
+      background: #5A67D8;
       color: white;
-      padding: 1rem;
-      text-align: center;
-      margin-top: 2rem;
+      padding: 0.9rem 1.4rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      display: inline-block;
+      text-decoration: none;
     }
-    .lang-ar { display: block; }
-    .lang-en { display: none; direction: ltr; text-align: left; }
+
+    /* تحسين الجوال */
+    @media (max-width: 480px) {
+      header {
+        padding: 1rem;
+      }
+
+      header img {
+        height: 38px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .container {
+        padding: 1rem;
+      }
+    }
   </style>
 </head>
 
 <body>
 
 <header>
-  <strong style="font-size: 1.3rem;">PDF SWIFT</strong>
+  <img src="https://raw.githubusercontent.com/imbadah/PdfSwift/main/logo.png">
 
-  <nav>
-    <a onclick="scrollToSection('tools')">الأدوات</a>
-    <a onclick="scrollToSection('about')">من نحن</a>
-    <a onclick="scrollToSection('contact')">تواصل معنا</a>
-    <a href="dashboard.html">لوحة التحكم</a>
+  <nav id="nav-area">
+    <!-- يتم التعديل عبر JavaScript -->
   </nav>
-
-  <div>
-    <button class="toggle" onclick="toggleLang()">AR / EN</button>
-    <button class="toggle" onclick="toggleMode()">☀ / 🌙</button>
-  </div>
 </header>
 
 <div class="container">
+  <h1>مرحباً بك في PDF SWIFT</h1>
+  <p>منصة سريعة وسهلة لتحويل وتعديل ملفات PDF بدون تسجيل دخول.</p>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1 class="lang-ar">أدوات PDF سريعة وآمنة واحترافية</h1>
-    <h1 class="lang-en">Fast, Secure, and Professional PDF Tools</h1>
-
-    <p class="lang-ar">يوفر PDF SWIFT أدوات قوية لدمج وتقسيم وضغط وتحويل واستخراج النصوص من ملفات PDF.</p>
-    <p class="lang-en">PDF SWIFT provides powerful tools to merge, split, compress, convert, and extract text from PDF files.</p>
-
-    <button class="btn lang-ar" onclick="scrollToSection('tools')">ابدأ الآن</button>
-    <button class="btn lang-en" onclick="scrollToSection('tools')">Get Started</button>
-  </section>
-
-  <!-- TOOLS -->
-  <section id="tools" class="section">
-    <h2 class="lang-ar">جميع أدوات PDF في مكان واحد</h2>
-    <h2 class="lang-en">All Your PDF Tools in One Place</h2>
-
-    <div class="grid">
-      <div class="card" onclick="location.href='tools.html'">
-        <h3>دمج PDF</h3>
-      </div>
-
-      <div class="card" onclick="location.href='tools.html'">
-        <h3>تقسيم PDF</h3>
-      </div>
-
-      <div class="card" onclick="location.href='tools.html'">
-        <h3>ضغط PDF</h3>
-      </div>
-
-      <div class="card" onclick="location.href='tools.html'">
-        <h3>تحويل PDF</h3>
-      </div>
-
-      <div class="card" onclick="location.href='tools.html'">
-        <h3>استخراج النصوص OCR</h3>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <h2 class="lang-ar">لماذا تختار PDF SWIFT؟</h2>
-    <h2 class="lang-en">Why Choose PDF SWIFT?</h2>
-
-    <ul>
-      <li>سرعة عالية</li>
-      <li>خصوصية وأمان</li>
-      <li>سهولة الاستخدام</li>
-      <li>دعم لغات متعددة</li>
-      <li>الوضع الليلي</li>
-    </ul>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <h2 class="lang-ar">تواصل معنا</h2>
-    <h2 class="lang-en">Contact Us</h2>
-
-    <form>
-      <input class="lang-ar" type="text" placeholder="اسمك">
-      <input class="lang-ar" type="email" placeholder="بريدك الإلكتروني">
-      <textarea class="lang-ar" placeholder="رسالتك"></textarea>
-
-      <input class="lang-en" type="text" placeholder="Your Name">
-      <input class="lang-en" type="email" placeholder="Your Email">
-      <textarea class="lang-en" placeholder="Your Message"></textarea>
-
-      <button class="btn lang-ar" type="submit">إرسال</button>
-      <button class="btn lang-en" type="submit">Send Message</button>
-    </form>
-  </section>
-
+  <a href="tools.html" class="btn">الانتقال إلى الأدوات</a>
 </div>
 
-<footer>
-  <p class="lang-ar">© 2026 PDF SWIFT — جميع الحقوق محفوظة.</p>
-  <p class="lang-en">© 2026 PDF SWIFT — All Rights Reserved.</p>
-</footer>
-
 <script>
-function toggleMode() {
-  document.body.classList.toggle('dark');
-}
+  // عرض أزرار الهيدر حسب حالة المستخدم
+  const nav = document.getElementById("nav-area");
+  const username = localStorage.getItem("username");
 
-function toggleLang() {
-  const ar = document.querySelectorAll('.lang-ar');
-  const en = document.querySelectorAll('.lang-en');
-
-  const isArabic = ar[0].style.display !== 'none';
-
-  if (isArabic) {
-    ar.forEach(e => e.style.display = 'none');
-    en.forEach(e => e.style.display = '');
+  if (username) {
+    nav.innerHTML = `
+      <span style="margin-left:1rem;">${username}</span>
+      <a href="profile.html">الملف الشخصي</a>
+      <a href="#" onclick="logout()">تسجيل الخروج</a>
+    `;
   } else {
-    en.forEach(e => e.style.display = 'none');
-    ar.forEach(e => e.style.display = '');
+    nav.innerHTML = `
+      <a href="login.html">تسجيل الدخول</a>
+      <a href="signup.html">إنشاء حساب</a>
+    `;
   }
-}
 
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-}
+  function logout() {
+    localStorage.clear();
+    location.reload();
+  }
 </script>
 
 </body>
