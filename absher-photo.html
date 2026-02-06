@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>تعديل أبعاد الصورة لأبشر – PdfSwift</title>
+  <title>أدوات الصور – PdfSwift</title>
 
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
@@ -14,7 +14,7 @@
       background: #f8fafc;
     }
 
-    .absher-container {
+    .container-box {
       max-width: 900px;
       margin: 3rem auto;
       background: white;
@@ -23,22 +23,23 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
-    .title-box {
-      text-align: center;
-      margin-bottom: 2rem;
+    .section-title {
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
       position: relative;
+      padding-right: 40px;
+      cursor: pointer;
     }
 
-    .new-badge {
+    .section-title .new-badge {
       position: absolute;
-      top: -10px;
-      right: 50%;
-      transform: translateX(50%);
+      right: 0;
+      top: 0;
       background: #8b5cf6;
       color: white;
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 700;
       animation: pulse 2.2s infinite ease-in-out;
     }
@@ -49,20 +50,13 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    .crop-area {
-      width: 100%;
-      max-height: 450px;
-      overflow: hidden;
-      border-radius: 12px;
-      border: 2px solid #e2e8f0;
-      margin-bottom: 1.5rem;
-    }
-
-    .settings-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
+    .tool-box {
+      display: none;
       margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
     }
 
     input, select {
@@ -71,6 +65,7 @@
       border-radius: 10px;
       border: 1px solid #cbd5e1;
       font-size: 1rem;
+      margin-bottom: 1rem;
     }
 
     .action-btn {
@@ -81,7 +76,7 @@
       border-radius: 50px;
       font-size: 1.15rem;
       cursor: pointer;
-      margin-top: 2rem;
+      margin-top: 1rem;
       transition: all 0.3s;
       display: block;
       width: fit-content;
@@ -94,9 +89,13 @@
       transform: translateY(-3px);
     }
 
-    #result-preview {
-      margin-top: 2rem;
-      text-align: center;
+    .crop-area {
+      width: 100%;
+      max-height: 450px;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      margin-bottom: 1.5rem;
     }
 
     #result-preview img {
@@ -130,80 +129,150 @@
   </div>
 </header>
 
-<div class="absher-container">
+<div class="container-box">
 
-  <div class="title-box">
+  <!-- ============================
+       أداة أبشر
+  ============================= -->
+  <h2 class="section-title" onclick="toggleBox('absher-box')">
+    تعديل أبعاد الصورة لأبشر
     <span class="new-badge">جديد</span>
-    <h1>تعديل أبعاد الصورة لأبشر</h1>
-    <p>أداة احترافية لضبط المقاس والحجم والخلفية والقص التلقائي للوجه</p>
+  </h2>
+
+  <div id="absher-box" class="tool-box">
+
+    <input type="file" id="upload-image" accept="image/*">
+
+    <div class="crop-area">
+      <img id="image-preview" style="max-width:100%; display:none;">
+    </div>
+
+    <div class="settings-grid">
+
+      <select id="preset-size">
+        <option value="200x200">200×200 (الهوية)</option>
+        <option value="400x400">400×400 (الجواز)</option>
+        <option value="600x600">600×600 (صورة شخصية)</option>
+        <option value="custom">مخصص</option>
+      </select>
+
+      <input type="number" id="custom-width" placeholder="العرض (px)" style="display:none;">
+      <input type="number" id="custom-height" placeholder="الطول (px)" style="display:none;">
+
+      <select id="max-size">
+        <option value="100">≤ 100KB</option>
+        <option value="150">≤ 150KB</option>
+        <option value="200">≤ 200KB</option>
+      </select>
+
+      <select id="dpi">
+        <option value="72">DPI 72</option>
+        <option value="96">DPI 96</option>
+        <option value="150">DPI 150</option>
+      </select>
+
+      <select id="background">
+        <option value="white">خلفية بيضاء</option>
+        <option value="transparent">شفافة</option>
+        <option value="custom">لون مخصص</option>
+      </select>
+
+      <input type="color" id="custom-bg" style="display:none;">
+
+      <select id="format">
+        <option value="jpeg">JPG</option>
+        <option value="png">PNG</option>
+      </select>
+
+    </div>
+
+    <button id="process-btn" class="action-btn">تعديل الصورة الآن</button>
+    <div id="status" class="status"></div>
+    <div id="result-preview"></div>
+
   </div>
 
-  <!-- رفع الصورة -->
-  <input type="file" id="upload-image" accept="image/*">
+  <!-- ============================
+       إزالة الخلفية
+  ============================= -->
+  <h2 class="section-title" onclick="toggleBox('remove-bg-box')">
+    إزالة الخلفية
+    <span class="new-badge">جديد</span>
+  </h2>
 
-  <!-- منطقة القص -->
-  <div class="crop-area">
-    <img id="image-preview" style="max-width:100%; display:none;">
+  <div id="remove-bg-box" class="tool-box">
+    <input type="file" id="remove-bg-input" accept="image/*">
+    <button id="remove-bg-btn" class="action-btn">إزالة الخلفية الآن</button>
+    <div id="remove-bg-status" class="status"></div>
+    <div id="remove-bg-preview"></div>
   </div>
 
-  <!-- الإعدادات -->
-  <div class="settings-grid">
+  <!-- ============================
+       تحسين جودة الصورة
+  ============================= -->
+  <h2 class="section-title" onclick="toggleBox('enhance-box')">
+    تحسين جودة الصورة
+    <span class="new-badge">جديد</span>
+  </h2>
 
-    <select id="preset-size">
-      <option value="200x200">200×200 (الهوية)</option>
-      <option value="400x400">400×400 (الجواز)</option>
-      <option value="600x600">600×600 (صورة شخصية)</option>
-      <option value="custom">مخصص</option>
-    </select>
+  <div id="enhance-box" class="tool-box">
+    <input type="file" id="enhance-input" accept="image/*">
+    <button id="enhance-btn" class="action-btn">تحسين الآن</button>
+    <div id="enhance-status" class="status"></div>
+    <div id="enhance-preview"></div>
+  </div>
 
-    <input type="number" id="custom-width" placeholder="العرض (px)" style="display:none;">
-    <input type="number" id="custom-height" placeholder="الطول (px)" style="display:none;">
+  <!-- ============================
+       ضغط الصور
+  ============================= -->
+  <h2 class="section-title" onclick="toggleBox('compress-box')">
+    ضغط الصور
+    <span class="new-badge">جديد</span>
+  </h2>
 
-    <select id="max-size">
+  <div id="compress-box" class="tool-box">
+    <input type="file" id="compress-input" accept="image/*">
+    <select id="compress-size">
       <option value="100">≤ 100KB</option>
-      <option value="150">≤ 150KB</option>
       <option value="200">≤ 200KB</option>
-      <option value="250">≤ 250KB</option>
       <option value="300">≤ 300KB</option>
     </select>
-
-    <select id="dpi">
-      <option value="72">DPI 72</option>
-      <option value="96">DPI 96</option>
-      <option value="150">DPI 150</option>
-      <option value="300">DPI 300</option>
-    </select>
-
-    <select id="background">
-      <option value="white">خلفية بيضاء</option>
-      <option value="transparent">شفافة</option>
-      <option value="custom">لون مخصص</option>
-    </select>
-
-    <input type="color" id="custom-bg" style="display:none;">
-
-    <select id="format">
-      <option value="jpeg">JPG</option>
-      <option value="png">PNG</option>
-    </select>
-
+    <button id="compress-btn" class="action-btn">ضغط الآن</button>
+    <div id="compress-status" class="status"></div>
+    <div id="compress-preview"></div>
   </div>
 
-  <!-- زر التعديل -->
-  <button id="process-btn" class="action-btn">تعديل الصورة الآن</button>
+  <!-- ============================
+       تحويل الصور
+  ============================= -->
+  <h2 class="section-title" onclick="toggleBox('convert-box')">
+    تحويل الصور
+    <span class="new-badge">جديد</span>
+  </h2>
 
-  <div id="status" class="status"></div>
-
-  <!-- النتيجة -->
-  <div id="result-preview"></div>
+  <div id="convert-box" class="tool-box">
+    <input type="file" id="convert-input" accept="image/*">
+    <select id="convert-format">
+      <option value="jpeg">JPG</option>
+      <option value="png">PNG</option>
+      <option value="webp">WEBP</option>
+    </select>
+    <button id="convert-btn" class="action-btn">تحويل الآن</button>
+    <div id="convert-status" class="status"></div>
+    <div id="convert-preview"></div>
+  </div>
 
 </div>
 
-<!-- مكتبات القص والذكاء -->
+<script>
+function toggleBox(id) {
+  const box = document.getElementById(id);
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-
-<!-- ملف JS الخاص بالأداة -->
 <script src="absher-photo.js"></script>
 
 </body>
