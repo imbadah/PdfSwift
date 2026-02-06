@@ -1,14 +1,15 @@
-let cropper;
-let originalImage;
-
-// تحميل نماذج face-api
+/* ============================================================
+   تحميل نماذج face-api لكشف الوجه
+============================================================ */
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri("https://cdn.jsdelivr.net/npm/face-api.js/models"),
 ]).then(() => console.log("Face API Loaded"));
 
-/* ============================
-   رفع الصورة + تشغيل Cropper
-============================ */
+let cropper;
+
+/* ============================================================
+   أداة أبشر – رفع الصورة + تشغيل Cropper
+============================================================ */
 document.getElementById("upload-image").addEventListener("change", function () {
   const file = this.files[0];
   if (!file) return;
@@ -16,8 +17,6 @@ document.getElementById("upload-image").addEventListener("change", function () {
   const img = document.getElementById("image-preview");
   img.src = URL.createObjectURL(file);
   img.style.display = "block";
-
-  originalImage = file;
 
   if (cropper) cropper.destroy();
 
@@ -35,9 +34,9 @@ document.getElementById("upload-image").addEventListener("change", function () {
   detectFace();
 });
 
-/* ============================
+/* ============================================================
    كشف الوجه تلقائيًا
-============================ */
+============================================================ */
 async function detectFace() {
   const img = document.getElementById("image-preview");
 
@@ -46,10 +45,7 @@ async function detectFace() {
     new faceapi.TinyFaceDetectorOptions()
   );
 
-  if (!detection) {
-    console.log("لم يتم العثور على وجه");
-    return;
-  }
+  if (!detection) return;
 
   const box = detection.box;
 
@@ -61,26 +57,26 @@ async function detectFace() {
   });
 }
 
-/* ============================
+/* ============================================================
    إظهار حقول المقاس المخصص
-============================ */
+============================================================ */
 document.getElementById("preset-size").addEventListener("change", function () {
   const custom = this.value === "custom";
   document.getElementById("custom-width").style.display = custom ? "block" : "none";
   document.getElementById("custom-height").style.display = custom ? "block" : "none";
 });
 
-/* ============================
+/* ============================================================
    إظهار لون الخلفية المخصص
-============================ */
+============================================================ */
 document.getElementById("background").addEventListener("change", function () {
   document.getElementById("custom-bg").style.display =
     this.value === "custom" ? "block" : "none";
 });
 
-/* ============================
-   زر تعديل الصورة
-============================ */
+/* ============================================================
+   زر تعديل الصورة لأبشر
+============================================================ */
 document.getElementById("process-btn").addEventListener("click", async () => {
   const status = document.getElementById("status");
   status.textContent = "جاري معالجة الصورة...";
@@ -92,7 +88,6 @@ document.getElementById("process-btn").addEventListener("click", async () => {
     return;
   }
 
-  // المقاس
   let width, height;
   const preset = document.getElementById("preset-size").value;
 
@@ -105,46 +100,31 @@ document.getElementById("process-btn").addEventListener("click", async () => {
     height = parseInt(h);
   }
 
-  // الخلفية
   let bg = "white";
   const bgType = document.getElementById("background").value;
   if (bgType === "transparent") bg = null;
   if (bgType === "custom") bg = document.getElementById("custom-bg").value;
 
-  // DPI
   const dpi = parseInt(document.getElementById("dpi").value);
-
-  // الحجم المطلوب
   const maxKB = parseInt(document.getElementById("max-size").value);
-
-  // الصيغة
   const format = document.getElementById("format").value;
 
-  // قص الصورة
   const croppedCanvas = cropper.getCroppedCanvas({
     width,
     height,
     fillColor: bg || "white",
   });
 
-  // إضافة DPI
-  const ctx = croppedCanvas.getContext("2d");
-  ctx.imageSmoothingQuality = "high";
-
-  // ضغط الصورة للوصول للحجم المطلوب
   let quality = 0.92;
   let output;
 
   do {
     output = croppedCanvas.toDataURL(`image/${format}`, quality);
     const sizeKB = Math.round((output.length * 3) / 4 / 1024);
-
     if (sizeKB <= maxKB) break;
-
     quality -= 0.05;
   } while (quality > 0.1);
 
-  // عرض النتيجة
   document.getElementById("result-preview").innerHTML = `
     <h3>الصورة النهائية:</h3>
     <img src="${output}">
@@ -153,5 +133,169 @@ document.getElementById("process-btn").addEventListener("click", async () => {
   `;
 
   status.textContent = "تم تجهيز الصورة ✔️";
+  status.className = "status success";
+});
+
+/* ============================================================
+   إزالة الخلفية – Remove Background
+============================================================ */
+document.getElementById("remove-bg-btn").addEventListener("click", async () => {
+  const file = document.getElementById("remove-bg-input").files[0];
+  const status = document.getElementById("remove-bg-status");
+
+  if (!file) {
+    status.textContent = "الرجاء اختيار صورة";
+    status.className = "status error";
+    return;
+  }
+
+  status.textContent = "جاري إزالة الخلفية...";
+  status.className = "status";
+
+  const img = await createImageBitmap(file);
+  const canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+
+  // إزالة الخلفية البيضاء
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) {
+      data[i + 3] = 0;
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+
+  const output = canvas.toDataURL("image/png");
+
+  document.getElementById("remove-bg-preview").innerHTML = `
+    <img src="${output}">
+    <br><br>
+    <a href="${output}" download="no-bg.png" class="action-btn">تحميل الصورة</a>
+  `;
+
+  status.textContent = "تمت إزالة الخلفية ✔️";
+  status.className = "status success";
+});
+
+/* ============================================================
+   تحسين جودة الصورة – Enhance
+============================================================ */
+document.getElementById("enhance-btn").addEventListener("click", async () => {
+  const file = document.getElementById("enhance-input").files[0];
+  const status = document.getElementById("enhance-status");
+
+  if (!file) {
+    status.textContent = "الرجاء اختيار صورة";
+    status.className = "status error";
+    return;
+  }
+
+  status.textContent = "جاري تحسين الجودة...";
+  status.className = "status";
+
+  const img = await createImageBitmap(file);
+  const canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext("2d");
+
+  ctx.filter = "contrast(115%) brightness(110%) saturate(120%) sharpen(1px)";
+  ctx.drawImage(img, 0, 0);
+
+  const output = canvas.toDataURL("image/jpeg", 0.92);
+
+  document.getElementById("enhance-preview").innerHTML = `
+    <img src="${output}">
+    <br><br>
+    <a href="${output}" download="enhanced.jpg" class="action-btn">تحميل الصورة</a>
+  `;
+
+  status.textContent = "تم تحسين الجودة ✔️";
+  status.className = "status success";
+});
+
+/* ============================================================
+   ضغط الصور – Compress
+============================================================ */
+document.getElementById("compress-btn").addEventListener("click", async () => {
+  const file = document.getElementById("compress-input").files[0];
+  const maxKB = parseInt(document.getElementById("compress-size").value);
+  const status = document.getElementById("compress-status");
+
+  if (!file) {
+    status.textContent = "الرجاء اختيار صورة";
+    status.className = "status error";
+    return;
+  }
+
+  status.textContent = "جاري الضغط...";
+  status.className = "status";
+
+  const img = await createImageBitmap(file);
+  const canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+
+  let quality = 0.92;
+  let output;
+
+  do {
+    output = canvas.toDataURL("image/jpeg", quality);
+    const sizeKB = Math.round((output.length * 3) / 4 / 1024);
+    if (sizeKB <= maxKB) break;
+    quality -= 0.05;
+  } while (quality > 0.1);
+
+  document.getElementById("compress-preview").innerHTML = `
+    <img src="${output}">
+    <br><br>
+    <a href="${output}" download="compressed.jpg" class="action-btn">تحميل الصورة</a>
+  `;
+
+  status.textContent = "تم ضغط الصورة ✔️";
+  status.className = "status success";
+});
+
+/* ============================================================
+   تحويل الصور – Convert
+============================================================ */
+document.getElementById("convert-btn").addEventListener("click", async () => {
+  const file = document.getElementById("convert-input").files[0];
+  const format = document.getElementById("convert-format").value;
+  const status = document.getElementById("convert-status");
+
+  if (!file) {
+    status.textContent = "الرجاء اختيار صورة";
+    status.className = "status error";
+    return;
+  }
+
+  status.textContent = "جاري التحويل...";
+  status.className = "status";
+
+  const img = await createImageBitmap(file);
+  const canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+
+  const output = canvas.toDataURL(`image/${format}`, 0.92);
+
+  document.getElementById("convert-preview").innerHTML = `
+    <img src="${output}">
+    <br><br>
+    <a href="${output}" download="converted.${format}" class="action-btn">تحميل الصورة</a>
+  `;
+
+  status.textContent = "تم تحويل الصورة ✔️";
   status.className = "status success";
 });
