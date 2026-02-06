@@ -14,6 +14,9 @@
   <!-- مكتبة PDF-LIB -->
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
+  <!-- مكتبة PDF.js لتحويل PDF إلى صور -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
   <style>
     .tools-page { padding: 4rem 1rem 2rem; }
 
@@ -41,8 +44,6 @@
       justify-content: center;
       gap: 0.7rem;
       padding: 1.2rem;
-      position: relative;
-      overflow: hidden;
     }
 
     .tool-btn:hover {
@@ -55,22 +56,6 @@
       background: #1e293b;
       color: #60a5fa;
       border-color: #475569;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    .dark-theme .tool-btn:hover {
-      border-color: #60a5fa;
-      box-shadow: 0 12px 30px rgba(96,165,250,0.25);
-    }
-
-    .tool-btn i {
-      font-size: clamp(1.8rem, 5vw, 2.2rem);
-    }
-
-    .tool-btn span {
-      font-size: clamp(0.9rem, 3vw, 1rem);
-      text-align: center;
-      line-height: 1.3;
     }
 
     .tool-section {
@@ -81,23 +66,19 @@
       max-width: 860px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
+
     .dark-theme .tool-section {
       background: #1e293b;
       box-shadow: 0 10px 30px rgba(0,0,0,0.45);
     }
 
-    input[type="file"], input[type="text"], select, textarea {
+    input, select {
       width: 100%;
       padding: 1rem;
       margin: 1rem 0;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
       font-size: 1.05rem;
-    }
-    .dark-theme input, .dark-theme select, .dark-theme textarea {
-      background: #334155;
-      color: #e2e8f0;
-      border-color: #475569;
     }
 
     .action-btn {
@@ -111,14 +92,22 @@
       margin-top: 1.5rem;
       transition: all 0.3s;
     }
+
     .action-btn:hover { background: #1e3a8a; transform: translateY(-3px); }
-    .dark-theme .action-btn { background: #3b82f6; }
 
     .status { margin-top: 1.5rem; font-weight: 600; min-height: 1.8rem; }
     .success { color: #16a34a; }
     .error   { color: #dc2626; }
+
+    /* قسم أدوات التحويل */
+    .convert-hero {
+      text-align: center;
+      margin-top: 4rem;
+      margin-bottom: 2rem;
+    }
   </style>
 </head>
+
 <body class="light-theme">
 
 <header class="header">
@@ -130,19 +119,20 @@
       <a href="about.html">عن الموقع</a>
       <a href="privacy.html">الخصوصية</a>
     </nav>
-    <button id="themeToggle" class="theme-btn" aria-label="تبديل الوضع">
+    <button id="themeToggle" class="theme-btn">
       <i class="fa-solid fa-moon-stars"></i>
     </button>
   </div>
 </header>
 
 <main class="container tools-page">
+
+  <!-- الأدوات الأساسية -->
   <h1 class="section-title">أدوات PDF محلية 100%</h1>
   <p style="text-align:center; margin-bottom: 3.5rem;">اختر الأداة – كل شيء يتم داخل متصفحك</p>
 
   <div class="grid tool-selector">
 
-    <!-- الأدوات التي تعمل -->
     <button class="tool-btn" data-tool="merge">
       <i class="fas fa-object-group"></i>
       <span>دمج ملفات</span>
@@ -163,25 +153,34 @@
       <span>علامة مائية</span>
     </button>
 
-    <!-- الأدوات الجديدة – تفتح نافذة فقط -->
-    <button class="tool-btn" onclick="openModal('حذف صفحات', 'هذه الميزة قيد التطوير وسيتم إطلاقها قريبًا.')">
-      <i class="fas fa-trash-can"></i>
-      <span>حذف صفحات</span>
-    </button>
+  </div>
 
-    <button class="tool-btn" onclick="openModal('استخراج النص', 'هذه الميزة قيد التطوير وسيتم إطلاقها قريبًا.')">
-      <i class="fas fa-file-lines"></i>
-      <span>استخراج النص</span>
-    </button>
+  <!-- قسم أدوات التحويل -->
+  <div class="convert-hero">
+    <h1 class="section-title">أدوات التحويل</h1>
+    <p>حوّل ملفاتك بسهولة بين PDF والصور والورد</p>
+  </div>
 
-    <button class="tool-btn" onclick="openModal('استخراج الصور', 'هذه الميزة قيد التطوير وسيتم إطلاقها قريبًا.')">
-      <i class="fas fa-image"></i>
-      <span>استخراج صور</span>
-    </button>
+  <div class="grid tool-selector">
 
-    <button class="tool-btn" onclick="openModal('PDF إلى صور', 'هذه الميزة قيد التطوير وسيتم إطلاقها قريبًا.')">
-      <i class="fas fa-images"></i>
+    <button class="tool-btn" data-tool="pdf-to-images">
+      <i class="fas fa-file-image"></i>
       <span>PDF إلى صور</span>
+    </button>
+
+    <button class="tool-btn" data-tool="images-to-pdf">
+      <i class="fas fa-images"></i>
+      <span>صور إلى PDF</span>
+    </button>
+
+    <button class="tool-btn" onclick="openModal('PDF إلى Word', 'هذه الميزة قيد التطوير وسيتم إطلاقها قريبًا.')">
+      <i class="fas fa-file-word"></i>
+      <span>PDF إلى Word</span>
+    </button>
+
+    <button class="tool-btn" onclick="openModal('Word إلى PDF', 'هذه الميزة قيد التطوير وسيتم إطلاقها قريبًا.')">
+      <i class="fas fa-file-pdf"></i>
+      <span>Word إلى PDF</span>
     </button>
 
   </div>
@@ -222,9 +221,30 @@
     <div id="watermark-status" class="status"></div>
   </section>
 
+  <!-- PDF إلى صور -->
+  <section id="tool-pdf-to-images" class="tool-section" style="display:none;">
+    <h2>تحويل PDF إلى صور</h2>
+    <input type="file" id="pdf-to-images-file" accept=".pdf">
+    <select id="pdf-image-format">
+      <option value="png">PNG</option>
+      <option value="jpg">JPG</option>
+    </select>
+    <button id="btn-pdf-to-images" class="action-btn">تحويل الآن</button>
+    <div id="pdf-to-images-status" class="status"></div>
+  </section>
+
+  <!-- صور إلى PDF -->
+  <section id="tool-images-to-pdf" class="tool-section" style="display:none;">
+    <h2>تحويل الصور إلى PDF</h2>
+    <input type="file" id="images-to-pdf-files" accept="image/*" multiple>
+    <button id="btn-images-to-pdf" class="action-btn">تحويل الآن</button>
+    <div id="images-to-pdf-status" class="status"></div>
+  </section>
+
   <button id="back-to-tools" class="action-btn" style="display:none; margin: 3rem auto;">
     ← العودة إلى الأدوات
   </button>
+
 </main>
 
 <footer class="footer">
