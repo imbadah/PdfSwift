@@ -6,8 +6,10 @@ document.querySelectorAll('.tool-btn[data-tool]').forEach(btn => {
     const tool = btn.dataset.tool;
     if (!tool) return;
 
-    document.querySelectorAll('.tool-selector, .section-title, main > p')
+    document.querySelectorAll('.tool-selector, .section-title, main > p, .convert-hero')
       .forEach(el => el.style.display = 'none');
+
+    document.querySelectorAll('.tool-section').forEach(el => el.style.display = 'none');
 
     document.getElementById(`tool-${tool}`).style.display = 'block';
     document.getElementById('back-to-tools').style.display = 'block';
@@ -17,9 +19,9 @@ document.querySelectorAll('.tool-btn[data-tool]').forEach(btn => {
 document.getElementById('back-to-tools').addEventListener('click', () => {
   document.querySelectorAll('.tool-section').forEach(el => el.style.display = 'none');
   document.getElementById('back-to-tools').style.display = 'none';
-  document.querySelector('.tool-selector').style.display = 'grid';
-  document.querySelector('.section-title').style.display = 'block';
-  document.querySelector('main > p').style.display = 'block';
+
+  document.querySelectorAll('.tool-selector, .section-title, main > p, .convert-hero')
+    .forEach(el => el.style.display = '');
 });
 
 /* ============================
@@ -221,6 +223,106 @@ document.getElementById("btn-watermark").addEventListener("click", async () => {
 
   } catch (err) {
     status.textContent = "حدث خطأ أثناء إضافة العلامة";
+    status.className = "status error";
+  }
+});
+
+/* ============================
+   PDF → Images (PNG/JPG)
+============================ */
+document.getElementById("btn-pdf-to-images").addEventListener("click", async () => {
+  const file = document.getElementById("pdf-to-images-file").files[0];
+  const format = document.getElementById("pdf-image-format").value;
+  const status = document.getElementById("pdf-to-images-status");
+
+  if (!file) {
+    status.textContent = "الرجاء اختيار ملف PDF";
+    status.className = "status error";
+    return;
+  }
+
+  status.textContent = "جاري التحويل...";
+  status.className = "status";
+
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: 2 });
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      await page.render({ canvasContext: ctx, viewport }).promise;
+
+      const imgData = canvas.toDataURL(`image/${format}`);
+
+      const link = document.createElement("a");
+      link.href = imgData;
+      link.download = `page-${i}.${format}`;
+      link.click();
+    }
+
+    status.textContent = "تم تحويل الصفحات إلى صور ✔️";
+    status.className = "status success";
+
+  } catch (err) {
+    status.textContent = "حدث خطأ أثناء التحويل";
+    status.className = "status error";
+  }
+});
+
+/* ============================
+   Images → PDF
+============================ */
+document.getElementById("btn-images-to-pdf").addEventListener("click", async () => {
+  const files = document.getElementById("images-to-pdf-files").files;
+  const status = document.getElementById("images-to-pdf-status");
+
+  if (!files.length) {
+    status.textContent = "الرجاء اختيار صور";
+    status.className = "status error";
+    return;
+  }
+
+  status.textContent = "جاري التحويل...";
+  status.className = "status";
+
+  try {
+    const pdfDoc = await PDFLib.PDFDocument.create();
+
+    for (let file of files) {
+      const imgBytes = await file.arrayBuffer();
+      let img;
+
+      if (file.type.includes("png")) {
+        img = await pdfDoc.embedPng(imgBytes);
+      } else {
+        img = await pdfDoc.embedJpg(imgBytes);
+      }
+
+      const page = pdfDoc.addPage([img.width, img.height]);
+      page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+    }
+
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "images.pdf";
+    link.click();
+
+    status.textContent = "تم تحويل الصور إلى PDF ✔️";
+    status.className = "status success";
+
+  } catch (err) {
+    status.textContent = "حدث خطأ أثناء التحويل";
     status.className = "status error";
   }
 });
