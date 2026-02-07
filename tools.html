@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 
   <!-- PDF-LIB -->
@@ -431,6 +431,33 @@
 
 <script src="theme.js"></script>
 <script src="tools.js"></script>
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    if (!menu) return;
+
+    const isOpen = menu.style.display === "flex" || menu.style.display === "block";
+    menu.style.display = isOpen ? "none" : "flex";
+
+    if (!isOpen) {
+      menu.style.flexDirection = "column";
+    }
+  }
+
+  // إغلاق القائمة عند النقر خارجها
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById("mobileMenu");
+    const toggle = document.querySelector('.menu-toggle');
+
+    if (!menu || !toggle) return;
+
+    const clickedOutside = !menu.contains(e.target) && !toggle.contains(e.target);
+
+    if (window.innerWidth <= 900 && menu.style.display === 'flex' && clickedOutside) {
+      menu.style.display = 'none';
+    }
+  });
+</script>
 
 </body>
 </html>
