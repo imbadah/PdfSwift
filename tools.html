@@ -7,9 +7,6 @@
 
     <link rel="stylesheet" href="ui-kit.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- Face Detection -->
-    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
 </head>
 
 <body>
@@ -45,6 +42,7 @@
     <!-- كروت الأدوات -->
     <section class="tools-grid container">
 
+        <!-- تجهيز صورة أبشر -->
         <div class="tool-card">
             <i class="fas fa-image"></i>
             <h3>تجهيز صورة أبشر</h3>
@@ -52,6 +50,7 @@
             <button class="btn btn-primary" onclick="openTool('absher')">فتح الأداة</button>
         </div>
 
+        <!-- تحويل صورة إلى PDF -->
         <div class="tool-card">
             <i class="fas fa-file-arrow-up"></i>
             <h3>تحويل صورة إلى PDF</h3>
@@ -59,6 +58,7 @@
             <button class="btn btn-primary" onclick="openTool('img2pdf')">فتح الأداة</button>
         </div>
 
+        <!-- تحويل PDF إلى صور -->
         <div class="tool-card">
             <i class="fas fa-file-arrow-down"></i>
             <h3>تحويل PDF إلى صور</h3>
@@ -66,6 +66,7 @@
             <button class="btn btn-primary" onclick="openTool('pdf2img')">فتح الأداة</button>
         </div>
 
+        <!-- ضغط الصور -->
         <div class="tool-card">
             <i class="fas fa-compress"></i>
             <h3>ضغط الصور</h3>
@@ -73,6 +74,7 @@
             <button class="btn btn-primary" onclick="openTool('compress')">فتح الأداة</button>
         </div>
 
+        <!-- قص الصور -->
         <div class="tool-card">
             <i class="fas fa-crop"></i>
             <h3>قص الصور</h3>
@@ -80,11 +82,20 @@
             <button class="btn btn-primary" onclick="openTool('crop')">فتح الأداة</button>
         </div>
 
+        <!-- تدوير الصور -->
         <div class="tool-card">
             <i class="fas fa-rotate"></i>
             <h3>تدوير الصور</h3>
             <p>تدوير الصور لليمين أو اليسار أو 180°.</p>
             <button class="btn btn-primary" onclick="openTool('rotate')">فتح الأداة</button>
+        </div>
+
+        <!-- ⭐ إضافة PDF Studio الجديدة -->
+        <div class="tool-card">
+            <i class="fas fa-file-pdf"></i>
+            <h3>PDF Studio</h3>
+            <p>تحرير ومعالجة ملفات PDF في واجهة احترافية.</p>
+            <a href="pdf-studio.html" class="btn btn-primary">فتح الأداة</a>
         </div>
 
     </section>
@@ -98,17 +109,6 @@
         </div>
     </footer>
 
-    <!-- مكتبات PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script>
-        window.pdfjsLib = window['pdfjs-dist/build/pdf'];
-        pdfjsLib.GlobalWorkerOptions.workerSrc =
-            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    </script>
-
-    <!-- محرك الأدوات -->
     <script src="tools-engine.js"></script>
 
     <script>
