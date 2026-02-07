@@ -50,6 +50,70 @@
             background: #ffffffcc;
             backdrop-filter: blur(12px);
             box-shadow: 0 2px 12px rgba(15,23,42,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .nav a {
+            margin-left: 18px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #111827;
+            text-decoration: none;
+        }
+
+        .nav a.active {
+            color: #4f46e5;
+        }
+
+        /* القائمة في الجوال */
+        @media (max-width: 768px) {
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav {
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background: #ffffff;
+                width: 200px;
+                padding: 15px;
+                border-radius: 12px;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-10px);
+                transition: 0.3s ease;
+            }
+
+            .nav.open {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+
+            .nav a {
+                display: block;
+                margin-bottom: 10px;
+            }
         }
 
         /* ============================
@@ -406,43 +470,4 @@
                 </div>
 
                 <div class="tool-card">
-                    <div class="tool-icon" style="background:linear-gradient(135deg,#06b6d4,#0ea5e9);box-shadow:0 8px 22px rgba(14,165,233,0.45);">
-                        <i class="fas fa-rotate"></i>
-                    </div>
-                    <div class="tool-title">تدوير الصورة</div>
-                    <div class="tool-desc">تدوير الصور لليمين أو اليسار أو 180 درجة.</div>
-                    <button class="btn-primary" onclick="openTool('rotate')">فتح الأداة</button>
-                </div>
-
-                <div class="tool-card">
-                    <div class="tool-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 8px 22px rgba(34,197,94,0.45);">
-                        <i class="fas fa-image"></i>
-                    </div>
-                    <div class="tool-title">تجهيز صورة أبشر</div>
-                    <div class="tool-desc">تهيئة الصورة تلقائيًا لمتطلبات منصة أبشر.</div>
-                    <button class="btn-primary" onclick="openTool('absher')">فتح الأداة</button>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- الفوتر الجديد -->
-    <footer class="footer fade-in delay-3">
-        <p>© 2024 PdfSwift — جميع الحقوق محفوظة</p>
-
-        <a href="https://x.com/BADAH_AI" target="_blank" class="x-follow">
-            <i class="fa-brands fa-x-twitter"></i>
-            تابع مطوّر المنصة
-        </a>
-    </footer>
-
-</div>
-
-<script src="tools-engine.js"></script>
-
-<script>
-    const menuToggle = document.getElementById("menuToggle");
-    const nav = document.querySelector(".nav");
-
-    menuToggle.addEventListener("click",
+                    <div class="tool-icon" style="background:linear-gradient(135deg,#06b6d
